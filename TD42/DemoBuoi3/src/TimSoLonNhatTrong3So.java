@@ -3,16 +3,22 @@ import java.util.Scanner;
 public class TimSoLonNhatTrong3So {
 
 	public static void main(String[] args) {
-		// Nhập dữ liệu
-		int a = nhap("Nhập vào số thứ nhất: ");
-		int b = nhap("Nhập vào số thứ hai: ");
-		int c = nhap("Nhập vào số thứ ba: ");
-		// Xử lý
-		int max = timSoLonNhat(a, b, c);
-		int sum = tinhTong(a, b, c);
-		// In kết quả
-		xuatKetQua("Số lớn nhất trong 3 số là: ", max);
-		xuatKetQua("Tổng 3 số là: ", sum);
+		String chonLua;
+		Scanner scan = new Scanner(System.in);
+		do {
+			// Nhập dữ liệu
+			int a = nhap("Nhập vào số thứ nhất: ");
+			int b = nhap("Nhập vào số thứ hai: ");
+			int c = nhap("Nhập vào số thứ ba: ");
+			// Xử lý
+			int max = timSoLonNhat(a, b, c);
+			int sum = tinhTong(a, b, c);
+			// In kết quả
+			xuatKetQua("Số lớn nhất trong 3 số là: ", max);
+			xuatKetQua("Tổng 3 số là: ", sum);
+			System.out.println("\nBạn có muốn tiếp tục không? 'y' để tiếp: ");
+			chonLua = scan.nextLine();
+		} while (chonLua.equalsIgnoreCase("y"));
 	}
 
 	public static int nhap(String thongBao) {
@@ -39,7 +45,7 @@ public class TimSoLonNhatTrong3So {
 //		}
 //		return max;
 	}
-	
+
 	public static int tinhTong(int a, int b, int c) {
 		return a + b + c;
 	}
