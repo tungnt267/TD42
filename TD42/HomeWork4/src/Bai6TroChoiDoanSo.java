@@ -10,7 +10,7 @@ public class Bai6TroChoiDoanSo {
 
 		// Input
 		// Process
-		soNgauNhien = phatSinhSoNgauNhien(0, 1000);
+		soNgauNhien = phatSinhSoNgauNhien(); // 0 - 1000
 		// Output
 		do {
 			nhap();
@@ -25,8 +25,8 @@ public class Bai6TroChoiDoanSo {
 		return soNguoiDungNhap;
 	}
 
-	public static int phatSinhSoNgauNhien(int min, int max) {
-		return (int) (min + Math.random() * max + 1);
+	public static int phatSinhSoNgauNhien() {
+		return (int) (Math.random() * 999 + 1);
 	}
 
 	public static void kiemTraSo() {

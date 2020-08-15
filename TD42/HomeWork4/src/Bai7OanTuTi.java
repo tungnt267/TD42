@@ -34,12 +34,12 @@ public class Bai7OanTuTi {
 		return chonNguoiDung;
 	}
 
-	public static int phatSinhSoNgauNhien(int min, int max) {
-		return (int) (min + Math.random() * max + 1);
+	public static int phatSinhSoNgauNhien() {
+		return (int) (Math.random() * 3 + 1);
 	}
 
 	public static void tinhTiSo() {
-		chonMay = phatSinhSoNgauNhien(1, 3); // 1 = Bao, 2 = Búa, 3 = Kéo
+		chonMay = phatSinhSoNgauNhien(); // 1 = Bao, 2 = Búa, 3 = Kéo
 		if (chonNguoiDung == 1) {
 			if (chonMay == 1) {
 				System.out.println("Hòa!");
