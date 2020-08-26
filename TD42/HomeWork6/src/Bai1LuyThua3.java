@@ -39,8 +39,8 @@ public class Bai1LuyThua3 {
 
 	// Kiem tra luy thua cua 3 (3^k)
 	public static boolean kiemTraLuyThua3(int n) {
-		if (n == 1) {
-			return false;
+		if (n == 0) {
+			return true;
 		} else {
 			while (n % 3 == 0) {
 				n /= 3;
