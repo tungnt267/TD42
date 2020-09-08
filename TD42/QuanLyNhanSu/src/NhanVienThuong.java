@@ -12,32 +12,34 @@ import java.util.Scanner;
  */
 public class NhanVienThuong extends NhanSu {
 	// 1. Thuộc tính
-	private String truongPhongQuanLy;
-	private final double LUONG_NGAY = 100;
+	private String maTruongPhongQuanLy;
+	private final float LUONG_MOT_NGAY = 100;
 
 	// 2. Khởi tạo
 	public NhanVienThuong() {
 		super();
-		this.truongPhongQuanLy = null;
+		this.maTruongPhongQuanLy = null;
+		this.luongMotNgay = LUONG_MOT_NGAY;
 	}
 
-	public NhanVienThuong(String maSo, String hoTen, String soDienThoai, int soNgayLamViec, double luongThang,
-			String truongPhongQuanLy) {
-		super(maSo, hoTen, soDienThoai, soNgayLamViec, luongThang);
-		this.truongPhongQuanLy = truongPhongQuanLy;
+	public NhanVienThuong(String maSo, String hoTen, String soDienThoai, int soNgayLamViec,
+			String maTruongPhongQuanLy) {
+		super(maSo, hoTen, soDienThoai, soNgayLamViec);
+		this.maTruongPhongQuanLy = maTruongPhongQuanLy;
+		this.luongMotNgay = LUONG_MOT_NGAY;
 	}
 
 	// 3. get, set
-	public String getTruongPhongQuanLy() {
-		return truongPhongQuanLy;
+	public String getMaTruongPhongQuanLy() {
+		return maTruongPhongQuanLy;
 	}
 
-	public void setTruongPhongQuanLy(String truongPhongQuanLy) {
-		this.truongPhongQuanLy = truongPhongQuanLy;
+	public void setMaTruongPhongQuanLy(String maTruongPhongQuanLy) {
+		this.maTruongPhongQuanLy = maTruongPhongQuanLy;
 	}
 
-	public double getLUONG_NGAY() {
-		return LUONG_NGAY;
+	public float getLUONG_MOT_NGAY() {
+		return LUONG_MOT_NGAY;
 	}
 
 	// 4. Nhập, xuất
@@ -45,22 +47,22 @@ public class NhanVienThuong extends NhanSu {
 	public void nhap(String chucVu) {
 		Scanner scan = new Scanner(System.in);
 		super.nhap(chucVu);
-		System.out.print("Vui lòng nhập vào mã số trưởng phòng quản lý: ");
-		this.truongPhongQuanLy = scan.nextLine();
 	}
 
 	@Override
 	public void xuat(int stt) {
 		super.xuat(stt);
-		System.out.print("Nhân viên thường\t|");
-		System.out.print(this.truongPhongQuanLy + "\t\t|\t\t");
+		System.out.print(String.format("%-13s", "Nhân viên") + "|");
+		System.out.print(String.format("%-14s", this.maTruongPhongQuanLy) + "|");
+		System.out.print(String.format("%-17s", "") + "|");
+		System.out.print(String.format("%-15s", "") + "|");
+		System.out.print(String.format("%-14s", this.tinhLuong()) + "|");
+		System.out.print(String.format("%-14s", "") + "|");
 	}
 
 	// 5. Nghiệp vụ
 	@Override
-	public double tinhLuong() {
-		super.tinhLuong();
-		this.luongThang = this.LUONG_NGAY * this.soNgayLamViec;
-		return this.luongThang;
+	public float tinhLuong() {
+		return this.luongMotNgay * this.soNgayLamViec;
 	}
 }

@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * Lớp đối tượng trưởng ph
+ * Lớp đối tượng trưởng phòng
  */
 
 /**
@@ -13,18 +13,20 @@ import java.util.Scanner;
 public class TruongPhong extends NhanSu {
 	// 1. Thuộc tính
 	private int soNVDuoiQuyen;
-	private final double LUONG_NGAY = 200;
+	private final float LUONG_MOT_NGAY = 200;
+	private final float PHU_CAP = 100;
 
 	// 2. Khởi tạo
 	public TruongPhong() {
 		super();
 		this.soNVDuoiQuyen = 0;
+		this.luongMotNgay = LUONG_MOT_NGAY;
 	}
 
-	public TruongPhong(String maSo, String hoTen, String soDienThoai, int soNgayLamViec, double luongThang,
-			int soNVDuoiQuyen) {
-		super(maSo, hoTen, soDienThoai, soNgayLamViec, luongThang);
-		this.soNVDuoiQuyen = soNVDuoiQuyen;
+	public TruongPhong(String maSo, String hoTen, String soDienThoai, int soNgayLamViec) {
+		super(maSo, hoTen, soDienThoai, soNgayLamViec);
+		this.soNVDuoiQuyen = 0;
+		this.luongMotNgay = LUONG_MOT_NGAY;
 	}
 
 	// 3. get, set
@@ -36,8 +38,12 @@ public class TruongPhong extends NhanSu {
 		this.soNVDuoiQuyen = soNVDuoiQuyen;
 	}
 
-	public double getLUONG_NGAY() {
-		return LUONG_NGAY;
+	public float getLUONG_MOT_NGAY() {
+		return LUONG_MOT_NGAY;
+	}
+
+	public float getPHU_CAP() {
+		return PHU_CAP;
 	}
 
 	// 4. Nhập, xuất
@@ -45,22 +51,22 @@ public class TruongPhong extends NhanSu {
 	public void nhap(String chucVu) {
 		Scanner scan = new Scanner(System.in);
 		super.nhap(chucVu);
-		System.out.print("Vui lòng nhập vào số nhân viên dưới quyền: ");
-		this.soNVDuoiQuyen = Integer.parseInt(scan.nextLine());
 	}
 
 	@Override
 	public void xuat(int stt) {
 		super.xuat(stt);
-		System.out.print("Trưởng Phòng\t\t\t|");
-		System.out.print(this.soNVDuoiQuyen + "\t|");
+		System.out.print(String.format("%-13s", "Trưởng Phòng") + "|");
+		System.out.print(String.format("%-14s", "") + "|");
+		System.out.print(String.format("%-17s", this.soNVDuoiQuyen) + "|");
+		System.out.print(String.format("%-15s", "") + "|");
+		System.out.print(String.format("%-14s", this.tinhLuong()) + "|");
+		System.out.print(String.format("%-14s", "") + "|");
 	}
 
 	// 5. Nghiệp vụ
 	@Override
-	public double tinhLuong() {
-		super.tinhLuong();
-		this.luongThang = this.LUONG_NGAY * this.soNgayLamViec + 100 * this.soNVDuoiQuyen;
-		return this.luongThang;
+	public float tinhLuong() {
+		return this.luongMotNgay * this.soNgayLamViec + this.PHU_CAP * this.soNVDuoiQuyen;
 	}
 }

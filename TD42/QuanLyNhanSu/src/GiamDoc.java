@@ -12,31 +12,44 @@ import java.util.Scanner;
  */
 public class GiamDoc extends NhanSu {
 	// 1. Thuộc tính
-	private float coPhan;
-	private final double LUONG_NGAY = 300;
+	private float soCoPhan;
+	private final float LUONG_MOT_NGAY = 300;
+	private float tongThuNhap;
 
 	// 2. Khởi tạo
 	public GiamDoc() {
 		super();
-		this.coPhan = 0;
+		this.soCoPhan = 0;
+		this.luongMotNgay = LUONG_MOT_NGAY;
+		this.tongThuNhap = 0;
 	}
 
-	public GiamDoc(String maSo, String hoTen, String soDienThoai, int soNgayLamViec, double luongThang, float coPhan) {
-		super(maSo, hoTen, soDienThoai, soNgayLamViec, luongThang);
-		this.coPhan = coPhan;
+	public GiamDoc(String maSo, String hoTen, String soDienThoai, int soNgayLamViec, float soCoPhan) {
+		super(maSo, hoTen, soDienThoai, soNgayLamViec);
+		this.soCoPhan = soCoPhan;
+		this.luongMotNgay = LUONG_MOT_NGAY;
+		this.tongThuNhap = 0;
 	}
 
 	// 3. get, set
-	public float getCoPhan() {
-		return coPhan;
+	public float getSoCoPhan() {
+		return soCoPhan;
 	}
 
-	public void setCoPhan(float coPhan) {
-		this.coPhan = coPhan;
+	public void setSoCoPhan(float soCoPhan) {
+		this.soCoPhan = soCoPhan;
 	}
 
-	public double getLUONG_NGAY() {
-		return LUONG_NGAY;
+	public float getLUONG_MOT_NGAY() {
+		return LUONG_MOT_NGAY;
+	}
+
+	public float getTongThuNhap() {
+		return tongThuNhap;
+	}
+
+	public void setTongThuNhap(float tongThuNhap) {
+		this.tongThuNhap = tongThuNhap;
 	}
 
 	// 4. Nhập, xuất
@@ -46,25 +59,27 @@ public class GiamDoc extends NhanSu {
 		super.nhap(chucVu);
 		System.out.print("Vui lòng nhập vào số cổ phần trong công ty (%): ");
 		do {
-			this.coPhan = Float.parseFloat(scan.nextLine());
-			if (this.coPhan < 0 || this.coPhan > 100) {
+			this.soCoPhan = Float.parseFloat(scan.nextLine());
+			if (this.soCoPhan < 0 || this.soCoPhan > 100) {
 				System.out.print("Vui lòng nhập cổ phần trong khoảng 1-100%: ");
 			}
-		} while (this.coPhan < 0 || this.coPhan > 100);
+		} while (this.soCoPhan < 0 || this.soCoPhan > 100);
 	}
 
 	@Override
 	public void xuat(int stt) {
 		super.xuat(stt);
-		System.out.print("Giám Đốc\t\t\t\t\t|");
-		System.out.print(this.coPhan + "\t|");
+		System.out.print(String.format("%-13s", "Giám Đốc") + "|");
+		System.out.print(String.format("%-14s", "") + "|");
+		System.out.print(String.format("%-17s", "") + "|");
+		System.out.print(String.format("%-15s", this.soCoPhan) + "|");
+		System.out.print(String.format("%-14s", this.tinhLuong()) + "|");
+		System.out.print(String.format("%-14s", this.tongThuNhap) + "|");
 	}
 
 	// 5. Nghiệp vụ
 	@Override
-	public double tinhLuong() {
-		super.tinhLuong();
-		this.luongThang = this.LUONG_NGAY * this.soNgayLamViec;
-		return this.luongThang;
+	public float tinhLuong() {
+		return this.luongMotNgay * this.soNgayLamViec;
 	}
 }

@@ -1,4 +1,6 @@
+import java.text.Normalizer;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * Lớp đối tượng nhân sự
@@ -9,13 +11,13 @@ import java.util.Scanner;
  *
  *         Ngày tạo: 28-08-2020
  */
-public class NhanSu {
+public abstract class NhanSu {
 	// 1. Thuộc tính
 	protected String maSo;
 	protected String hoTen;
 	protected String soDienThoai;
 	protected int soNgayLamViec;
-	protected double luongThang;
+	protected float luongMotNgay;
 
 	// 2. Khởi tạo
 	public NhanSu() {
@@ -23,15 +25,14 @@ public class NhanSu {
 		this.hoTen = null;
 		this.soDienThoai = null;
 		this.soNgayLamViec = 0;
-		this.luongThang = 0;
+		this.luongMotNgay = 0;
 	}
 
-	public NhanSu(String maSo, String hoTen, String soDienThoai, int soNgayLamViec, double luongThang) {
+	public NhanSu(String maSo, String hoTen, String soDienThoai, int soNgayLamViec) {
 		this.maSo = maSo;
 		this.hoTen = hoTen;
 		this.soDienThoai = soDienThoai;
 		this.soNgayLamViec = soNgayLamViec;
-		this.luongThang = luongThang;
 	}
 
 	// 3. get, set
@@ -67,12 +68,12 @@ public class NhanSu {
 		this.soNgayLamViec = soNgayLamViec;
 	}
 
-	public double getLuongThang() {
-		return luongThang;
+	public float getLuongMotNgay() {
+		return luongMotNgay;
 	}
 
-	public void setLuongThang(double luongThang) {
-		this.luongThang = luongThang;
+	public void setLuongMotNgay(float luongMotNgay) {
+		this.luongMotNgay = luongMotNgay;
 	}
 
 	// 4. Nhập, xuất
@@ -88,23 +89,36 @@ public class NhanSu {
 		do {
 			this.soNgayLamViec = Integer.parseInt(scan.nextLine());
 			if (this.soNgayLamViec < 0 || this.soNgayLamViec > 31) {
-				System.out.println("Vui lòng nhập số ngày làm việc trong khoảng 1-31: ");
+				System.out.print("Vui lòng nhập số ngày làm việc trong khoảng 0-31: ");
 			}
 		} while (this.soNgayLamViec < 0 || this.soNgayLamViec > 31);
 	}
 
 	public void xuat(int stt) {
-		System.out.print("\n" + stt + "\t|");
-		System.out.print(this.maSo + "\t\t|");
-		System.out.print(this.hoTen + "\t\t|");
-		System.out.print(this.soDienThoai + "\t|");
-		System.out.print(this.soNgayLamViec + "\t\t\t|");
+		System.out.print("\n" + String.format("%-4s", stt) + "|");
+		System.out.print(String.format("%-12s", this.maSo) + "|");
+		System.out.print(String.format("%-25s", this.hoTen) + "|");
+		System.out.print(String.format("%-14s", this.soDienThoai) + "|");
+		System.out.print(String.format("%-17s", this.soNgayLamViec) + "|");
+		System.out.print(String.format("%-15s", this.luongMotNgay) + "|");
 	}
 
 	// 5. Nghiệp vụ
-	public double tinhLuong() {
-		this.luongThang = 0;
-		return this.luongThang;
+	// Tính lương tháng
+	public abstract float tinhLuong();
+
+	// Tách lấy tên
+	public String tachLayTen() {
+		String ten = null;
+		int viTriKhoangTrangCuoi = deAccent(this.hoTen).trim().lastIndexOf(" ");
+		ten = deAccent(this.hoTen).substring(viTriKhoangTrangCuoi + 1, deAccent(this.hoTen).length());
+		return ten;
 	}
 
+	// Chuyển đổi chuỗi String tiếng Việt có dấu thành không dấu
+	public static String deAccent(String str) {
+		String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
+		Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+		return pattern.matcher(nfdNormalizedString).replaceAll("");
+	}
 }

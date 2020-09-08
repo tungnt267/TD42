@@ -1,4 +1,3 @@
-import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
@@ -12,35 +11,28 @@ import java.util.Scanner;
  */
 public class CongTy {
 	// 1. Thuộc tính
-	private LinkedList<NhanSu> congTy; // chứa danh sách nhân sự trong công ty
 	private String tenCongTy;
 	private String maSoThue;
-	private double doanhThu;
+	private float doanhThuThang;
+	DanhSachNhanSu objectDSNS;
 
 	// 2. Khởi tạo
 	public CongTy() {
-		this.congTy = new LinkedList<NhanSu>();
 		this.tenCongTy = null;
 		this.maSoThue = null;
-		this.doanhThu = 0;
+		this.doanhThuThang = 0;
+		objectDSNS = new DanhSachNhanSu();
 	}
 
-	public CongTy(LinkedList<NhanSu> congTy, String tenCongTy, String maSoThue, double doanhThu) {
-		this.congTy = congTy;
+	public CongTy(String tenCongTy, String maSoThue, float doanhThuThang, DanhSachNhanSu objectDSNS) {
+		super();
 		this.tenCongTy = tenCongTy;
 		this.maSoThue = maSoThue;
-		this.doanhThu = doanhThu;
+		this.doanhThuThang = doanhThuThang;
+		this.objectDSNS = objectDSNS;
 	}
 
 	// 3. get, set
-	public LinkedList<NhanSu> getCongTy() {
-		return congTy;
-	}
-
-	public void setCongTy(LinkedList<NhanSu> congTy) {
-		this.congTy = congTy;
-	}
-
 	public String getTenCongTy() {
 		return tenCongTy;
 	}
@@ -57,12 +49,20 @@ public class CongTy {
 		this.maSoThue = maSoThue;
 	}
 
-	public double getDoanhThu() {
-		return doanhThu;
+	public float getDoanhThuThang() {
+		return doanhThuThang;
 	}
 
-	public void setDoanhThu(double doanhThu) {
-		this.doanhThu = doanhThu;
+	public void setDoanhThuThang(float doanhThuThang) {
+		this.doanhThuThang = doanhThuThang;
+	}
+
+	public DanhSachNhanSu getObjectDSNS() {
+		return objectDSNS;
+	}
+
+	public void setObjectDSNS(DanhSachNhanSu objectDSNS) {
+		this.objectDSNS = objectDSNS;
 	}
 
 	// 4. Nhập, xuất
@@ -72,147 +72,202 @@ public class CongTy {
 		this.tenCongTy = scan.nextLine();
 		System.out.print("Vui lòng nhập vào mã số thuế: ");
 		this.maSoThue = scan.nextLine();
-		System.out.print("Vui lòng nhập doanh thu công ty: ");
+		System.out.print("Vui lòng nhập doanh thu tháng của công ty: ");
 		do {
-			this.doanhThu = Double.parseDouble(scan.nextLine());
-			if (this.doanhThu < 0) {
+			this.doanhThuThang = Float.parseFloat(scan.nextLine());
+			if (this.doanhThuThang < 0) {
 				System.out.print("Vui lòng nhập doanh thu không âm: ");
 			}
-		} while (this.doanhThu < 0);
+		} while (this.doanhThuThang < 0);
 	}
 
 	public void xuat() {
-		System.out.println("\nTên công ty: " + this.tenCongTy);
+		System.out.println("\n--------------------THÔNG TIN CÔNG TY--------------------");
+		System.out.println("Tên công ty: " + this.tenCongTy);
 		System.out.println("Mã số thuế: " + this.maSoThue);
-		System.out.println("Tổng doanh thu: " + this.doanhThu);
-		header();
-		int stt = 0;
-		for (NhanSu ns : this.congTy) {
-			stt++;
-			ns.xuat(stt);
-		}
+		System.out.println("Doanh thu tháng: " + this.doanhThuThang);
 	}
 
-	public void header() {
-		System.out.println(
-				"\n-------------------------------------------------------------THÔNG TIN NHÂN SỰ--------------------------------------------------------------\n");
-		System.out.print("STT \t|");
-		System.out.print("Mã nhân sự \t|");
-		System.out.print("Họ tên \t\t|");
-		System.out.print("Số điện thoại \t|");
-		System.out.print("Số ngày làm việc \t|");
-		System.out.print("Chức vụ \t\t|");
-		System.out.print("Mã TP quản lý \t|");
-		System.out.print("Số NV dưới quyền \t|");
-		System.out.print("Số cổ phần \t|");
-		System.out.print("Lương tháng \t|");
-		System.out.print("Tổng thu nhập");
+	public void thucHien() {
+		this.objectDSNS.capNhatSoLuongNV();
+		this.tinhTongThuNhapTungGD();
+		Scanner scan = new Scanner(System.in);
+		int chon;
+		boolean thoat = false;
+		do {
+			this.inMenu();
+			System.out.print("\nVui lòng chọn chức năng: ");
+			chon = Integer.parseInt(scan.nextLine());
+			switch (chon) {
+			case 1:
+				this.nhap();
+				this.xuat();
+				this.tinhTongThuNhapTungGD();
+				break;
+			case 2:
+				this.objectDSNS.phanBoNhanVienThuong();
+				this.objectDSNS.capNhatSoLuongNV();
+				break;
+			case 3:
+				this.objectDSNS.themNhanSu();
+				break;
+			case 4:
+				this.objectDSNS.xoaNhanSu();
+				break;
+			case 5:
+				header("DANH SÁCH NHÂN SỰ ");
+				this.objectDSNS.xuat();
+				underline();
+				break;
+			case 6:
+				System.out.println("\nTổng lương tháng toàn công ty là: " + this.objectDSNS.tinhTongLuong());
+				break;
+			case 7:
+				header("NHÂN VIÊN THƯỜNG CÓ LƯƠNG CAO NHẤT");
+				this.objectDSNS.timNhanVienThuongLuongMax().xuat();
+				underline();
+				break;
+			case 8:
+				header("TRƯỞNG PHÒNG CÓ SỐ NHÂN VIÊN DƯỚI QUYỀN NHIỀU NHẤT");
+				this.objectDSNS.timTPCoNhieuNVDQNhat().xuat();
+				underline();
+				break;
+			case 9:
+				header("DANH SÁCH NHÂN SỰ ĐÃ SẮP XẾP TÊN THEO THỨ TỰ ABC");
+				this.objectDSNS.sapXepTenTheoAbc().xuat();
+				underline();
+				break;
+			case 10:
+				header("DANH SÁCH NHÂN SỰ ĐÃ SẮP XẾP LƯƠNG THÁNG THEO THỨ TỰ GIẢM DẦN ");
+				this.objectDSNS.sapXepLuongGiamDan().xuat();
+				underline();
+				break;
+			case 11:
+				header("GIÁM ĐỐC CÓ SỐ LƯỢNG CỔ PHẦN NHIỀU NHẤT ");
+				this.objectDSNS.timGiamDocCoPhanMax().xuat();
+				underline();
+				break;
+			case 12:
+				this.tinhTongThuNhapTungGD();
+				header("TỔNG THU NHẬP CỦA TỪNG GIÁM ĐỐC ");
+				this.xuatTongThuNhapGD().xuat();
+				underline();
+				break;
+			case 0:
+				System.out.println("Chương trình đã kết thúc!");
+				thoat = true;
+				break;
+			default:
+				System.out.print("Vui lòng chọn chức năng hợp lệ trong khoảng 0-12!");
+				break;
+			}
+		} while (!thoat);
+	}
+
+	public void inMenu() {
+		System.out.println("\n\n+------------------------------------------------------------------------+");
+		System.out.println("|                           MENU QUẢN LÝ NHÂN SỰ                         |");
+		System.out.println("|        1. Nhập thông tin công ty                                       |");
+		System.out.println("|        2. Phân bổ nhân viên thường vào trưởng phòng                    |");
+		System.out.println("|        3. Thêm một nhân sự                                             |");
+		System.out.println("|        4. Xóa một nhân sự                                              |");
+		System.out.println("|        5. Xuất danh sách nhân sự                                       |");
+		System.out.println("|        6. Xuất tổng lương toàn công ty                                 |");
+		System.out.println("|        7. Nhân viên thường có lương cao nhất                           |");
+		System.out.println("|        8. Trưởng Phòng có số lượng nhân viên dưới quyền nhiều nhất     |");
+		System.out.println("|        9. Sắp xếp nhân sự toàn công ty theo thứ tự abc (từ họ đến tên) |");
+		System.out.println("|        10. Sắp xếp nhân sự toàn công ty theo thứ tự lương giảm dần     |");
+		System.out.println("|        11. Giám Đốc có số lượng cổ phần nhiều nhất                     |");
+		System.out.println("|        12. Xuất tổng thu nhập của từng Giám Đốc                        |");
+		System.out.println("|    (*) 0. Thoát chương trình                                           |");
+		System.out.println("+------------------------------------------------------------------------+");
+	}
+
+	public void header(String tieuDe) {
+		tieuDe = String.format("%-" + ((186 - tieuDe.length()) / 2) + "s", "").replace(' ', '-') + tieuDe
+				+ String.format("%-" + ((186 - tieuDe.length()) / 2) + "s", "").replace(' ', '-');
+		System.out.println("\n" + tieuDe + "\n");
+		System.out.print(String.format("%-4s", "STT") + "|");
+		System.out.print(String.format("%-12s", "Mã nhân sự") + "|");
+		System.out.print(String.format("%-25s", "Họ tên") + "|");
+		System.out.print(String.format("%-14s", "Số điện thoại") + "|");
+		System.out.print(String.format("%-17s", "Số ngày làm việc") + "|");
+		System.out.print(String.format("%-15s", "Lương một ngày") + "|");
+		System.out.print(String.format("%-13s", "Chức vụ") + "|");
+		System.out.print(String.format("%-14s", "Mã TP quản lý") + "|");
+		System.out.print(String.format("%-17s", "Số NV dưới quyền") + "|");
+		System.out.print(String.format("%-15s", "Số cổ phần (%)") + "|");
+		System.out.print(String.format("%-14s", "Lương tháng") + "|");
+		System.out.print(String.format("%-14s", "Tổng thu nhập") + "|");
 		underline();
 	}
 
 	public void underline() {
 		System.out.print(
-				"\n----------------------------------------------------------------------------------------------------------------------------------------------");
+				"\n------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 	}
 
 	// 5. Nghiệp vụ
-	// 1. Thêm một nhân sự
-	public void themNhanSu() {
-		Scanner scan = new Scanner(System.in);
-		int chon;
-		System.out.print("Vui lòng chọn loại nhân sự (1-Nhân viên thưởng, 2-Trưởng Phòng, 3-Giám Đốc): ");
-		do {
-			chon = Integer.parseInt(scan.nextLine());
-			if (chon < 1 || chon > 3) {
-				System.out.print("Vui lòng chọn 1 trong 3 loại nhân sự trên: ");
-			}
-		} while (chon < 1 || chon > 3);
-		switch (chon) {
-		case 1:
-			NhanVienThuong nvt = new NhanVienThuong();
-			nvt.nhap("nhân viên thường");
-			this.congTy.add(nvt);
-			break;
-		case 2:
-			TruongPhong tp = new TruongPhong();
-			tp.nhap("Trưởng Phòng");
-			this.congTy.add(tp);
-			break;
-		case 3:
-			GiamDoc gd = new GiamDoc();
-			gd.nhap("Giám Đốc");
-			this.congTy.add(gd);
-			break;
-		default:
-			break;
-		}
+	// Tạo dữ liệu gỉả để test
+	public void taoDuLieuGia() {
+		NhanSu giamDoc1 = new GiamDoc("gd1", "Giám Đốc Tính", "123456789", 22, 12.5f);
+		NhanSu giamDoc2 = new GiamDoc("gd2", "Giám Đốc Long", "987654321", 24, 9.5f);
+		NhanSu giamDoc3 = new GiamDoc("gd3", "Giám Đốc Song", "999999999", 26, 12.5f);
+
+		NhanSu truongPhong1 = new TruongPhong("tp1", "Trưởng Phòng Bảo", "11223344", 25);
+		NhanSu truongPhong2 = new TruongPhong("tp2", "Trưởng Phòng Trung", "11112222", 26);
+		NhanSu truongPhong3 = new TruongPhong("tp3", "Trưởng Phòng Hà", "33334444", 24);
+		NhanSu truongPhong4 = new TruongPhong("tp4", "Trưởng Phòng Tú", "55556666", 23);
+
+		NhanSu nhanVien1 = new NhanVienThuong("nv1", "Nhân Viên Nam", "xxxxxxxxx", 24, "tp1");
+		NhanSu nhanVien2 = new NhanVienThuong("nv2", "Nhân Viên Hoàng", "yyyyyyyyy", 21, "tp1");
+		NhanSu nhanVien3 = new NhanVienThuong("nv3", "Nhân Viên An", "zzzzzzzzz", 22, "tp2");
+		NhanSu nhanVien4 = new NhanVienThuong("nv4", "Nhân Viên Ánh", "aaaaaaaaa", 23, "tp1");
+		NhanSu nhanVien5 = new NhanVienThuong("nv5", "Nhân Viên Thảo", "bbbbbbbbb", 20, "tp3");
+		NhanSu nhanVien6 = new NhanVienThuong("nv6", "Nhân Viên Dũng", "eeeeeeeee", 24, "tp3");
+
+		this.objectDSNS.getDsNhanSu().add(giamDoc1);
+		this.objectDSNS.getDsNhanSu().add(giamDoc2);
+		this.objectDSNS.getDsNhanSu().add(giamDoc3);
+
+		this.objectDSNS.getDsNhanSu().add(truongPhong1);
+		this.objectDSNS.getDsNhanSu().add(truongPhong2);
+		this.objectDSNS.getDsNhanSu().add(truongPhong3);
+		this.objectDSNS.getDsNhanSu().add(truongPhong4);
+
+		this.objectDSNS.getDsNhanSu().add(nhanVien1);
+		this.objectDSNS.getDsNhanSu().add(nhanVien2);
+		this.objectDSNS.getDsNhanSu().add(nhanVien3);
+		this.objectDSNS.getDsNhanSu().add(nhanVien4);
+		this.objectDSNS.getDsNhanSu().add(nhanVien5);
+		this.objectDSNS.getDsNhanSu().add(nhanVien6);
+
+		// Khởi tạo dữ liệu doanh thu tháng => test
+		this.setDoanhThuThang(100000);
 	}
 
-	// 2. Xóa một nhân sự
-	public boolean xoaMotNhanSu() {
-		Scanner scan = new Scanner(System.in);
-		System.out.print("Nhập vào mã nhân sự bạn muốn xóa: ");
-		String maCanXoa = scan.nextLine();
-		NhanSu ns = new NhanSu();
-		ns = timNhanSuTheoMa(maCanXoa);
-		if (ns.getMaSo() != null) {
-			this.congTy.remove(ns);
-			return true;
-		}
-		return false;
+	// Tính tổng thu nhập của từng Giám Đốc
+	public void tinhTongThuNhapTungGD() {
+		// Tính lợi nhuận công ty
+		float loiNhuanCTy = this.doanhThuThang - this.objectDSNS.tinhTongLuong();
 
-//		char chon;
-//		int stt = 0;
-//		for (NhanSu ns : this.congTy) {
-//			if ( == maSV) {
-//				stt++;
-//				System.out.println("Ban co chac chan muon xoa? Chon 'N' hoac 'N'");
-//				chon = scan.nextLine().charAt(0);
-//				switch (chon) {
-//				case 'Y':
-//					this.danhSachSinhVien.remove(sv);
-//					System.out.println("Ban da xoa SV co ma: " + maSV);
-//					break;
-//				case 'N':
-//					break;
-//				default:
-//					break;
-//				}
-//			}
-//		}
-//		if (stt == 0) {
-//			header();
-//			System.out.println("\t\t\t Khong tim thay SV de xoa!");
-//		}
-	}
-
-	// Tìm nhân sự theo mã
-	public NhanSu timNhanSuTheoMa(String maNS) {
-		NhanSu ketQua = null;
-		for (NhanSu ns : this.congTy) {
-			if (ns.getMaSo().equalsIgnoreCase(maNS)) {
-				ketQua = ns;
-				break;
+		// Tính thu nhập của Giám Đốc
+		for (NhanSu gd : this.objectDSNS.getDsNhanSu()) {
+			if (gd instanceof GiamDoc) {
+				float tongThuNhapGD = gd.tinhLuong() + loiNhuanCTy * ((GiamDoc) gd).getSoCoPhan() / 100;
+				((GiamDoc) gd).setTongThuNhap(tongThuNhapGD);
 			}
 		}
-		return ketQua;
 	}
 
-	public void khoiTao() {
-		NhanVienThuong nvt1 = new NhanVienThuong("123", "nguyen Van A", "0123456789", 12, 1000000, "");
-		NhanVienThuong nvt2 = new NhanVienThuong("1ab", "Nguyen Thi B", "0123456888", 15, 2000000, "abc");
-		TruongPhong tp1 = new TruongPhong("4ts", "Nguyen Van C", "0123456666", 20, 5000000, 10);
-		TruongPhong tp2 = new TruongPhong("5s", "Nguyen Thi D", "0123456555", 26, 8000000, 20);
-		GiamDoc gd1 = new GiamDoc("789", "Nguyen Van E", "0123456555", 14, 5000000, 10.5f);
-		GiamDoc gd2 = new GiamDoc("sas", "Nguyen Thi F", "0123456567", 16, 6000000, 20.5f);
-		GiamDoc gd3 = new GiamDoc("001", "Nguyen Van G", "0123456987", 28, 9000000, 25.6f);
-
-		this.congTy.add(nvt1);
-		this.congTy.add(nvt2);
-		this.congTy.add(tp1);
-		this.congTy.add(tp2);
-		this.congTy.add(gd1);
-		this.congTy.add(gd2);
-		this.congTy.add(gd3);
+	// Xuất tổng thu nhập từng giám đốc
+	public DanhSachNhanSu xuatTongThuNhapGD() {
+		DanhSachNhanSu dsKetQuaGD = new DanhSachNhanSu();
+		for (NhanSu gd : this.objectDSNS.getDsNhanSu()) {
+			if (gd instanceof GiamDoc) {
+				dsKetQuaGD.getDsNhanSu().add(gd);
+			}
+		}
+		return dsKetQuaGD;
 	}
 }
