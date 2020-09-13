@@ -184,27 +184,27 @@ public class CongTy {
 	}
 
 	public void header(String tieuDe) {
-		tieuDe = String.format("%-" + ((186 - tieuDe.length()) / 2) + "s", "").replace(' ', '-') + tieuDe
-				+ String.format("%-" + ((186 - tieuDe.length()) / 2) + "s", "").replace(' ', '-');
+		tieuDe = String.format("%-" + ((171 - tieuDe.length()) / 2) + "s", "").replace(' ', '-') + tieuDe
+				+ String.format("%-" + ((171 - tieuDe.length()) / 2) + "s", "").replace(' ', '-');
 		System.out.println("\n" + tieuDe + "\n");
 		System.out.print(String.format("%-4s", "STT") + "|");
-		System.out.print(String.format("%-12s", "Mã nhân sự") + "|");
-		System.out.print(String.format("%-25s", "Họ tên") + "|");
+		System.out.print(String.format("%-6s", "Mã số") + "|");
+		System.out.print(String.format("%-21s", "Họ tên") + "|");
 		System.out.print(String.format("%-14s", "Số điện thoại") + "|");
 		System.out.print(String.format("%-17s", "Số ngày làm việc") + "|");
 		System.out.print(String.format("%-15s", "Lương một ngày") + "|");
 		System.out.print(String.format("%-13s", "Chức vụ") + "|");
 		System.out.print(String.format("%-14s", "Mã TP quản lý") + "|");
 		System.out.print(String.format("%-17s", "Số NV dưới quyền") + "|");
-		System.out.print(String.format("%-15s", "Số cổ phần (%)") + "|");
-		System.out.print(String.format("%-14s", "Lương tháng") + "|");
+		System.out.print(String.format("%-11s", "Số cổ phần") + "|");
+		System.out.print(String.format("%-12s", "Lương tháng") + "|");
 		System.out.print(String.format("%-14s", "Tổng thu nhập") + "|");
 		underline();
 	}
 
 	public void underline() {
 		System.out.print(
-				"\n------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+				"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 	}
 
 	// 5. Nghiệp vụ

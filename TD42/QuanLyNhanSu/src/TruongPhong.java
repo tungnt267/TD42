@@ -59,8 +59,8 @@ public class TruongPhong extends NhanSu {
 		System.out.print(String.format("%-13s", "Trưởng Phòng") + "|");
 		System.out.print(String.format("%-14s", "") + "|");
 		System.out.print(String.format("%-17s", this.soNVDuoiQuyen) + "|");
-		System.out.print(String.format("%-15s", "") + "|");
-		System.out.print(String.format("%-14s", this.tinhLuong()) + "|");
+		System.out.print(String.format("%-11s", "") + "|");
+		System.out.print(String.format("%-12s", this.tinhLuong()) + "|");
 		System.out.print(String.format("%-14s", "") + "|");
 	}
 

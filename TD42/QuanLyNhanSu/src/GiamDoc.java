@@ -72,8 +72,8 @@ public class GiamDoc extends NhanSu {
 		System.out.print(String.format("%-13s", "Giám Đốc") + "|");
 		System.out.print(String.format("%-14s", "") + "|");
 		System.out.print(String.format("%-17s", "") + "|");
-		System.out.print(String.format("%-15s", this.soCoPhan) + "|");
-		System.out.print(String.format("%-14s", this.tinhLuong()) + "|");
+		System.out.print(String.format("%-11s", this.soCoPhan) + "|");
+		System.out.print(String.format("%-12s", this.tinhLuong()) + "|");
 		System.out.print(String.format("%-14s", this.tongThuNhap) + "|");
 	}
 

@@ -96,8 +96,8 @@ public abstract class NhanSu {
 
 	public void xuat(int stt) {
 		System.out.print("\n" + String.format("%-4s", stt) + "|");
-		System.out.print(String.format("%-12s", this.maSo) + "|");
-		System.out.print(String.format("%-25s", this.hoTen) + "|");
+		System.out.print(String.format("%-6s", this.maSo) + "|");
+		System.out.print(String.format("%-21s", this.hoTen) + "|");
 		System.out.print(String.format("%-14s", this.soDienThoai) + "|");
 		System.out.print(String.format("%-17s", this.soNgayLamViec) + "|");
 		System.out.print(String.format("%-15s", this.luongMotNgay) + "|");
